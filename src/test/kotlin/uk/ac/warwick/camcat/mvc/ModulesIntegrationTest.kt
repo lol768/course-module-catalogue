@@ -158,4 +158,12 @@ class ModulesIntegrationTest : IntegrationTest() {
     assertThat(page.url.path, equalTo("/modules/2020/CS126-7.5"))
   }
 
+  @Test
+  @WithMockUser(roles = [Role.user])
+  fun testNotRedirectWhenFilterIsUsedAndGotUniqueResult() {
+    // upper case with direct url
+    val page: HtmlPage = webClient.getPage("http://localhost/modules?keywords=CS126-7.5&departments=CS")
+    assertThat(page.url.toString(), equalTo("http://localhost/modules?keywords=CS126-7.5&departments=CS"))
+  }
+
 }
