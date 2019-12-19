@@ -10,4 +10,12 @@ data class ModuleQuery(
   val creditValues: List<BigDecimal> = emptyList(),
   val academicYear: AcademicYear = AcademicYear.starting(2020),
   val assessmentTypes: List<String> = emptyList()
-)
+) {
+  fun isKeywordsOnly(): Boolean {
+    return (keywords ?: "").isNotBlank() &&
+      assessmentTypes.isEmpty() &&
+      creditValues.isEmpty() &&
+      departments.isEmpty() &&
+      levels.isEmpty()
+  }
+}

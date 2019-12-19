@@ -58,13 +58,7 @@ class ModulesController(
     @ModelAttribute("results", binding = false) results: PageableModuleResults,
     @ModelAttribute("query", binding = false) query: ModuleQuery): ModelAndView {
     val result = results.result
-    if (result.page.toList().size == 1 &&
-      query.keywords?.trim()?.toLowerCase() == result.page.first().code.toLowerCase() &&
-      query.assessmentTypes.isEmpty() &&
-      query.creditValues.isEmpty() &&
-      query.departments.isEmpty() &&
-      query.levels.isEmpty()
-    ) {
+    if (result.page.toList().size == 1 && query.isKeywordsOnly()) {
       // user typed in an exact module code, and result is unique with out using dropdown filters
       return ModelAndView("redirect:/modules/${query.academicYear.startYear}/${result.page.first().code}")
     }
